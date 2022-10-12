@@ -158,7 +158,6 @@
 									@else {
 										$media: 'screen and (min-width: ' + $x + ')';
 									}
-
 							}
 
 						// Min and max.
@@ -193,9 +192,7 @@
 									@else {
 										$media: 'screen and (min-width: ' + $x + ') and (max-width: ' + $y + ')';
 									}
-
 							}
-
 					}
 
 				// String.
