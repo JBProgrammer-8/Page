@@ -1,0 +1,30 @@
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.exe
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.deps.json
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.runtimeconfig.json
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.dll
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.pdb
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.AssemblyInfoInputs.cache
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.AssemblyInfo.cs
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.csproj.CoreCompileInputs.cache
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.dll
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\refint\Sorteio.dll
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.pdb
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.genruntimeconfig.cache
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\ref\Sorteio.dll
+C:\Users\Josué Barros\OneDrive\Área de Trabalho\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.sourcelink.json
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.exe
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.deps.json
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.runtimeconfig.json
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.dll
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\bin\Debug\net6.0\Sorteio.pdb
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.AssemblyInfoInputs.cache
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.AssemblyInfo.cs
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.csproj.CoreCompileInputs.cache
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.sourcelink.json
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.dll
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\refint\Sorteio.dll
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.pdb
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\Sorteio.genruntimeconfig.cache
+C:\Users\jpaul\Downloads\Page-20231129T131702Z-001\Page\Sorteio\Sorteio\obj\Debug\net6.0\ref\Sorteio.dll

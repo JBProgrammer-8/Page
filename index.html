@@ -40,7 +40,7 @@
 							<li><a href="https://www.linkedin.com/in/josue-b-b48862212/" target="_blank" class="icon brands fa-linkedin"><span class="label">Facebook</span></a></li>
 							<li><a href="https://github.com/Josucka" target="_blank" class="icon brands fa-github"><span class="label">Github</span></a></li>
 							<li><a href="https://www.google.com/search?sa=X&authuser=0&bih=663&biw=1317&hl=pt-BR&sxsrf=ALiCzsbbaAuEzIAq73Tbs9I7mVmyyt-bRg%3A1664860344459&q=JB.Programmer&stick=H4sIAAAAAAAAAONgU1I1qDBLSzE0Nk-1SE0yNzJPMTa2MqgwMTE3NbIwSkuzMExLSUq1WMTK6-WkF1CUn16UmJubWgQAIu00RjkAAAA&mat=CQZE9QtgdTpv&ved=2ahUKEwjxkbqL6MX6AhXeCbkGHVIoAvAQrMcEegQIAxAC" target="_blank" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-							<li><a href="mailto:jbprogrammer.8@gmail.com" target="_blank" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+							<li><a href="" target="_blank" class="icon solid fa-envelope"><span class="label">WhatsApp</span></a></li>
 						</ul>
 				</div>
 
@@ -162,13 +162,14 @@
 
 							<form method="post" action="#">
 								<div class="row">
-									<div class="col-6 col-12-mobile"><input type="text" name="name" placeholder="Name" /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="email" placeholder="Email" /></div>
+									<div class="col-6 col-12-mobile"><input type="text" id="name" name="name" placeholder="Name" /></div>
+									<div class="col-6 col-12-mobile"><input type="text" name="whatsapp" placeholder="WhatsApp" /></div>
 									<div class="col-12">
-										<textarea name="message" placeholder="Message"></textarea>
+										<textarea id="mensage" name="name" placeholder="Digite sua mensage"></textarea>
 									</div>
 									<div class="col-12">
-										<input type="submit" value="Send Message" />
+										<button onclick="enviarWhatsapp()"> Contactar </button>
+										<!-- <input type="submit" value="Send Message" /> -->
 									</div>
 								</div>
 							</form>
@@ -186,12 +187,13 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/whatsApp.js"></script>
 	</body>
 </html>

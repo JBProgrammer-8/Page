@@ -1,0 +1,48 @@
+Princípios pilares para construir soluções escaláveis e confiáveis.
+
+=>Modularização clara
+=>Hierarquia de tarefas
+=>Fallbacks seguros
+
+
+
+
+
+
+ap l\idz desenvilcibmero parsoal 
+
+0--sç minha infra estrutura tem que ser baseada em pastas no desenvolvimento da aplicaçao com backend em CSharp, buscando instruturar em typescritp minha parte frontend.
+1-- siar my estructure is:
+Presention Layer
+Applicainton Layer
+Domain Layer
+Infrastruct Layer
+
+2-- a´t *Presention Layer
+--- Controller Folders
+--- Views Folsers
+--- ViewModel Folders
+*Application Layer
+--- Interface Folders
+--- Services Folders
+*Domain Layer
+--- Entidades Folders
+--- Interfaces Folders
+*Infrastruct Layer
+--- Data Folders
+--- Mapping Folders
+
+3-- projectInit ´para inicio de projeto fuou=====iniciado com o NOMECJATIRA *********NumSoUnicersoEnV' com a celeçao de pastas descritas no topico 2, adicionando as pastas Controller, Properties c9m os tres aq78vos padrao =Program =WeatherForescast =appsettings a infrastruct de dependencias no =Dependencies a coneçao com serciços de nuvem no =Connecred Services 
+
+4-- PaadronGit Para inicio de projeto foi se criando um padrao de commit partindo do VS sendo:
+4.1 <feat>(New Project)
+partindo para
+4.2 <feat>[New Project](Descriçao do commit_)
+A ter por base que: 4.1 esta referanciando ap dizer que é uma nova fiture e a descriçao do commit, ja em 4.2 estamos dizendo que a nova fiture esta no projeto de versao** seguido dda descriçao do commit, acreditando que esse pode ter se tornado o padrao adotado..;
+
+5-- criando novos projetos no *********NumSoUnicersoEnV'
+5.1 criando primeiro projeto do Caucario do Araguaia, 
+5.1.1 
+
+
+6-- GitProjectInit
