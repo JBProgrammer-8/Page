@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RamdomLoteca")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f65145f677c0e03f7e33a3c66ec159de0635de18")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c8ab7030ff5b022e1ab63c7b3c06c707cfd61b5")]
 [assembly: System.Reflection.AssemblyProductAttribute("RamdomLoteca")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RamdomLoteca")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
