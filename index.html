@@ -1,415 +1,912 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark scroll-smooth">
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Josué Barros | JB Programmer - Backend Architecture</title> <!-- Tailwind CSS CDN -->
-	<script src="https://cdn.tailwindcss.com"></script> <!-- Google Fonts & Material Symbols -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-		rel="stylesheet">
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-	<script> tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'], }, colors: { brand: { primary: '#38bdf8', secondary: '#818cf8', dark: '#0a0e16', surface: '#0f131c', container: '#181c24', border: '#222834', borderLight: '#2e3748', } } } } } </script>
-	<style>
-		body {
-			background-color: #0a0e16;
-			color: #e2e8f0;
-			font-family: 'Inter', sans-serif;
-		}
+<html class="dark scroll-smooth" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Josué Barros (JB Programmer) — Backend Architecture &amp; Data</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-high": "#262a33",
+            "tertiary-fixed-dim": "#ddb7ff",
+            "primary-fixed-dim": "#7bd0ff",
+            "inverse-on-surface": "#2c3039",
+            "on-secondary-fixed": "#000767",
+            "primary-fixed": "#c4e7ff",
+            "on-surface-variant": "#bdc8d1",
+            "tertiary-container": "#ce9bff",
+            "outline": "#87929a",
+            "on-primary": "#00354a",
+            "primary-container": "#38bdf8",
+            "on-tertiary-fixed": "#2c0051",
+            "on-tertiary-container": "#6400ac",
+            "on-primary-container": "#004965",
+            "tertiary": "#e1bfff",
+            "surface-container-highest": "#31353e",
+            "surface-container": "#1c2028",
+            "on-error": "#690005",
+            "secondary": "#bdc2ff",
+            "surface-dim": "#0f131c",
+            "surface-variant": "#31353e",
+            "inverse-surface": "#dfe2ee",
+            "background": "#0f131c",
+            "on-secondary": "#131e8c",
+            "on-surface": "#dfe2ee",
+            "on-tertiary-fixed-variant": "#6900b3",
+            "surface": "#0f131c",
+            "tertiary-fixed": "#f0dbff",
+            "on-primary-fixed-variant": "#004c69",
+            "surface-tint": "#7bd0ff",
+            "on-tertiary": "#490080",
+            "surface-container-low": "#181c24",
+            "on-error-container": "#ffdad6",
+            "surface-bright": "#353942",
+            "inverse-primary": "#00668a",
+            "on-background": "#dfe2ee",
+            "secondary-fixed": "#e0e0ff",
+            "error-container": "#93000a",
+            "outline-variant": "#3e484f",
+            "secondary-fixed-dim": "#bdc2ff",
+            "surface-container-lowest": "#0a0e16",
+            "on-secondary-fixed-variant": "#2f3aa3",
+            "primary": "#8ed5ff",
+            "on-primary-fixed": "#001e2c",
+            "on-secondary-container": "#a8afff",
+            "error": "#ffb4ab",
+            "secondary-container": "#2f3aa3"
+          },
+          fontFamily: {
+            "label-code": ["JetBrains Mono", "monospace"],
+            "code-block": ["JetBrains Mono", "monospace"],
+            "headline-lg": ["Inter", "sans-serif"],
+            "headline-md": ["Inter", "sans-serif"],
+            "headline-sm": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "label-button": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        overflow-x: hidden;
+      }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    }
 
-		.font-code {
-			font-family: 'JetBrains Mono', monospace;
-		}
-	</style>
+    /* Ambient Cyber Grid Background */
+    .cyber-grid-bg {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+    }
+
+    /* Floating ambient glowing orbs */
+    @keyframes float-slow {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(25px, -20px) scale(1.08); }
+    }
+    @keyframes float-reverse {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-20px, 15px) scale(0.95); }
+    }
+    .animate-float-slow {
+      animation: float-slow 14s ease-in-out infinite;
+    }
+    .animate-float-reverse {
+      animation: float-reverse 16s ease-in-out infinite;
+    }
+
+    /* Terminal Blinking Cursor */
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .cursor-blink {
+      animation: blink 1.05s infinite;
+    }
+
+    /* Card Micro-interaction hover */
+    .interactive-card {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.3s ease;
+    }
+    .interactive-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px -10px rgba(56, 189, 248, 0.18), 0 0 0 1px rgba(123, 208, 255, 0.28);
+    }
+
+    /* Shimmer Effect for Button */
+    .shimmer-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .shimmer-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(
+        60deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.25), 
+        transparent
+      );
+      transform: rotate(25deg);
+      transition: all 0.75s ease;
+      opacity: 0;
+    }
+    .shimmer-btn:hover::after {
+      left: 130%;
+      opacity: 1;
+    }
+
+    /* Staggered entrance animations */
+    @keyframes entranceFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-entrance {
+      animation: entranceFadeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-400 { animation-delay: 400ms; }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .interactive-card:hover {
+        transform: none !important;
+      }
+    }
+  </style>
 </head>
+<body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen selection:bg-primary/20 selection:text-primary cyber-grid-bg relative">
+<!-- Desktop & Mobile Sticky Header -->
+<header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl border-b border-outline-variant/30 transition-all duration-300">
+<div class="max-w-6xl mx-auto h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+<!-- Brand & Telemetry -->
+<a class="flex items-center gap-3 min-w-0 group" href="#">
+<img alt="JB Programmer Logo" class="h-8 w-auto object-contain shrink-0 group-hover:scale-105 group-hover:rotate-1 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida/AEtjO1V34JBHETiM7jjrU-hNzru3P5AcXIE4AxBlbftxBKGRUGhevfXuuexhi0TvEkArXNLGhiKgF3r1L1dlwd9_WQkzMVifOP1oI5x-CqXGVagHVXONL_twcPr7W4zCIkCZihiH2G8QFQ6qvdCwIILRJAHxR3fxZLKNifJDmHGp_Nm0QOdQ-ztije_HIk1aIYKG4bmu9RKJpWzFE6p1r3Rbvd2DfRg2iMPIty0HlJUK9U2GpizBU6VFtjMK02Y"/>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-code text-xs text-on-surface font-bold tracking-tight group-hover:text-primary transition-colors">JB PROGRAMMER</span>
+<span class="text-outline text-[11px] hidden sm:inline">/</span>
+<span class="font-label-code text-[11px] text-primary hidden sm:inline uppercase font-medium">Architecture</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="relative flex h-2 w-2 shrink-0">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary-container shadow-[0_0_8px_#38bdf8]"></span>
+</span>
+<span class="font-label-code text-[10px] text-on-surface-variant tracking-wider uppercase">Available for projects</span>
+</div>
+</div>
+</a>
+<!-- Desktop Nav Anchor Links -->
+<nav class="hidden md:flex items-center gap-1 lg:gap-2">
+<a class="px-3.5 py-1.5 rounded-lg text-sm font-medium text-on-surface hover:text-primary hover:bg-surface-container-high/60 active:scale-95 transition-all" href="#hero-section">Início</a>
+<a class="px-3.5 py-1.5 rounded-lg text-sm font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container-high/60 active:scale-95 transition-all" href="#techs-section">Conhecimento</a>
+<a class="px-3.5 py-1.5 rounded-lg text-sm font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container-high/60 active:scale-95 transition-all" href="#perfil-section">Perfil</a>
+<a class="px-3.5 py-1.5 rounded-lg text-sm font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container-high/60 active:scale-95 transition-all" href="#contato-section">Contato</a>
+</nav>
+<!-- Right Header Actions -->
+<div class="flex items-center gap-3 shrink-0">
+<a class="hidden sm:flex items-center justify-center w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant hover:text-primary hover:bg-surface-container-high hover:scale-105 active:scale-95 border border-outline-variant/20 hover:border-primary/40 transition-all" href="https://github.com" rel="noopener noreferrer" target="_blank" title="GitHub">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</a>
+<a class="hidden sm:flex items-center justify-center w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant hover:text-secondary hover:bg-surface-container-high hover:scale-105 active:scale-95 border border-outline-variant/20 hover:border-secondary/40 transition-all" href="https://linkedin.com" rel="noopener noreferrer" target="_blank" title="LinkedIn">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</a>
+<a class="shimmer-btn h-9 px-3.5 flex items-center gap-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-button text-xs font-bold hover:brightness-110 shadow-sm hover:shadow-[0_0_15px_rgba(56,189,248,0.4)] active:scale-95 transition-all" href="#contato-section">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+<span class="hidden xs:inline">HIRE ME</span>
+<span class="xs:hidden">FALAR</span>
+</a>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/60 flex items-center justify-center shrink-0 text-primary hover:border-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Top Sponsor Banner with hover and transition effects -->
+<aside class="w-full bg-surface-container-lowest border-b border-outline-variant/30 pt-16 relative z-40 transition-all duration-300" id="top-sponsor-banner">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-3 text-xs">
+<div class="flex items-center gap-3 min-w-0">
+<span class="shrink-0 font-label-code text-[10px] tracking-wider uppercase font-bold px-2 py-0.5 rounded bg-primary-container/20 text-primary-container border border-primary/20 animate-pulse">SPONSORED // DEV TOOLS</span>
+<div class="flex items-center gap-2 truncate text-on-surface-variant font-label-code text-[11px] sm:text-xs">
+<span class="text-primary font-semibold hidden sm:inline">JetBrains &amp; Azure Cloud:</span>
+<span class="truncate">Ambientes gerenciados de alta concorrência para .NET 8 &amp; C#.</span>
+</div>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<a class="inline-flex items-center gap-1 font-label-code text-[11px] text-primary hover:text-primary-container font-semibold transition-all group" href="https://www.jetbrains.com/dotnet/" rel="noopener noreferrer" target="_blank">
+<span class="hidden sm:inline">Testar Rider Free</span>
+<span class="sm:hidden">Acessar</span>
+<span class="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+<button aria-label="Fechar anúncio" class="text-outline hover:text-on-surface hover:rotate-90 flex items-center justify-center p-1 rounded transition-all" onclick="document.getElementById('top-sponsor-banner').style.display='none'" title="Fechar anúncio" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Container with responsive desktop spacing -->
+<main class="flex-1 w-full pt-16 md:pt-20 pb-28 md:pb-16 relative">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 md:space-y-24">
+<!-- HERO SECTION: 2-column on desktop -->
+<section class="relative pt-4 sm:pt-8 md:pt-12" id="hero-section">
+<!-- Glow Backdrops with float animation -->
+<div class="absolute -top-16 -left-20 w-80 h-80 bg-primary/15 rounded-full blur-3xl pointer-events-none animate-float-slow"></div>
+<div class="absolute top-40 -right-20 w-96 h-96 bg-secondary/15 rounded-full blur-3xl pointer-events-none animate-float-reverse"></div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+<!-- Left Column: Intro & Headline & CTAs -->
+<div class="lg:col-span-7 flex flex-col gap-5 animate-entrance">
+<!-- Status Badge Row -->
+<div class="flex items-center gap-3 flex-wrap">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-high/90 border border-outline-variant/40 backdrop-blur-md shadow-sm hover:border-primary/50 transition-colors">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary-container shadow-[0_0_6px_#38bdf8]"></span>
+</span>
+<span class="font-label-code text-[11px] text-on-surface tracking-wider uppercase font-semibold">Systems Online // Available</span>
+</div>
+<span class="font-label-code text-xs text-primary/80 bg-primary/10 border border-primary/20 px-2.5 py-1 rounded-md hover:bg-primary/20 transition-colors cursor-default">v2.4.0</span>
+</div>
+<!-- Prehead Tag -->
+<div>
+<span class="font-label-code text-xs text-primary font-semibold uppercase tracking-widest bg-primary/10 border border-primary/20 px-2.5 py-1 rounded inline-block shadow-[0_0_12px_rgba(56,189,248,0.15)]">
+                &gt; Backend Architecture &amp; Data
+              </span>
+</div>
+<!-- Headline -->
+<h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-on-surface tracking-tight leading-tight sm:leading-tight">
+              Olá! Eu sou <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-container to-secondary">Josué Barros</span>
+</h1>
+<!-- Bio -->
+<p class="text-base sm:text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+              Desenvolvedor Backend focado na construção de APIs de alta performance, integrações distribuídas, modelagem relacional sólida e código limpo orientado a resultados concretos.
+            </p>
+<!-- Action Buttons with micro-interactions -->
+<div class="flex flex-col sm:flex-row gap-3 pt-2">
+<a class="shimmer-btn inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-primary-container text-on-primary-container font-label-button text-sm font-bold shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all group" href="#contato-section">
+<span class="material-symbols-outlined text-[20px] group-hover:rotate-45 transition-transform">terminal</span>
+<span class="">Iniciar Conexão</span>
+</a>
+<a class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-surface-container-high border border-outline-variant/60 text-primary font-label-button text-sm font-semibold hover:bg-surface-container-highest hover:border-primary/60 active:scale-95 transition-all group shadow-sm hover:shadow-[0_0_15px_rgba(56,189,248,0.15)]" href="#techs-section">
+<span class="material-symbols-outlined text-[20px] group-hover:-translate-y-0.5 transition-transform">dns</span>
+<span class="">Ver Stack Técnica</span>
+</a>
+</div>
+<!-- Quick Telemetry Badges with Hover Micro-elevation -->
+<div class="grid grid-cols-3 gap-2.5 pt-2 max-w-lg">
+<div class="interactive-card p-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-center flex flex-col items-center justify-center hover:border-primary/50 cursor-pointer">
+<span class="font-label-code text-xs sm:text-sm text-primary font-bold">C# / .NET</span>
+<span class="font-label-code text-[10px] text-on-surface-variant">Core Architecture</span>
+</div>
+<div class="interactive-card p-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-center flex flex-col items-center justify-center hover:border-secondary/50 cursor-pointer">
+<span class="font-label-code text-xs sm:text-sm text-secondary font-bold">GraphQL</span>
+<span class="font-label-code text-[10px] text-on-surface-variant">APIs &amp; REST</span>
+</div>
+<div class="interactive-card p-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-center flex flex-col items-center justify-center hover:border-tertiary/50 cursor-pointer">
+<span class="font-label-code text-xs sm:text-sm text-tertiary font-bold">SQL RDBMS</span>
+<span class="font-label-code text-[10px] text-on-surface-variant">Data Integrity</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Interactive Backend Terminal Code Card with simulated typing/pulsing badge -->
+<div class="lg:col-span-5 w-full animate-entrance delay-200">
+<div class="interactive-card w-full rounded-2xl bg-surface-container-low border border-outline-variant/50 shadow-2xl overflow-hidden backdrop-blur-md hover:border-primary/60">
+<!-- Window Chrome -->
+<div class="px-4 py-3 bg-surface-container-high/80 border-b border-outline-variant/40 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-error/70 hover:scale-125 transition-transform cursor-pointer"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/70 hover:scale-125 transition-transform cursor-pointer"></div>
+<div class="w-3 h-3 rounded-full bg-primary/70 hover:scale-125 transition-transform cursor-pointer"></div>
+<span class="ml-2 font-label-code text-[11px] text-on-surface-variant font-medium">Program.cs — .NET 8 WebAPI</span>
+</div>
+<div class="flex items-center gap-1.5 font-label-code text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20 shadow-[0_0_8px_rgba(56,189,248,0.2)] animate-pulse">
+<span class="material-symbols-outlined text-[12px]">speed</span>
+<span class="">14ms Latency</span>
+</div>
+</div>
+<!-- Terminal Code Body -->
+<div class="p-4 sm:p-5 font-code-block text-xs sm:text-sm leading-relaxed overflow-x-auto text-on-surface-variant">
+<pre class="font-code-block"><code><span class="text-secondary">var</span> builder = <span class="text-primary">WebApplication</span>.CreateBuilder(args);
 
-<body class="min-h-screen pb-20 md:pb-8 selection:bg-sky-500 selection:text-white"> <!-- Header / Navigation Bar -->
-	<header class="sticky top-0 z-40 bg-[#0a0e16]/85 backdrop-blur-md border-b border-brand-border">
-		<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
-			<!-- Brand Logo --> <a href="#inicio" class="flex items-center space-x-3 group">
-				<div
-					class="w-9 h-9 rounded-lg bg-sky-950/60 border border-sky-500/30 flex items-center justify-center text-sky-400 group-hover:border-sky-400 transition">
-					<span class="material-symbols-outlined text-[20px]">terminal</span> </div>
-				<div>
-					<div
-						class="text-xs font-bold tracking-wider text-slate-100 uppercase font-code flex items-center gap-1.5">
-						JB Programmer <span class="text-slate-500 text-[10px]">/ ARCHITECTURE</span> </div>
-					<div class="flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium"> <span
-							class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Available for projects
-					</div>
-				</div>
-			</a> <!-- Desktop Nav Links (hidden on mobile, visible on md+) -->
-			<nav class="hidden md:flex items-center gap-8 text-xs font-medium text-slate-400"> <a href="#inicio"
-					class="hover:text-sky-400 transition">Início</a> <a href="#techs"
-					class="hover:text-sky-400 transition">Conhecimento</a> <a href="#sobre"
-					class="hover:text-sky-400 transition">Perfil</a> <a href="#contato"
-					class="hover:text-sky-400 transition">Contato</a> </nav> <!-- Desktop Actions -->
-			<div class="flex items-center gap-3"> <a href="https://github.com/JBProgrammer-8" target="_blank"
-					title="GitHub" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
-					<span class="material-symbols-outlined text-[20px]">code</span> </a> <a href="#contato"
-					class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs font-code transition shadow-sm shadow-sky-500/20">
-					<span class="material-symbols-outlined text-[16px]">chat</span> Falar </a> </div>
-		</div>
-	</header> <!-- Main Content Container -->
-	<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-14 space-y-16 md:space-y-24">
-		<!-- Hero Section: 2 columns on desktop -->
-		<section id="inicio" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-			<!-- Coluna Esquerda: Apresentação -->
-			<div class="lg:col-span-7 space-y-5">
-				<div class="flex items-center gap-3"> <span
-						class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-950/60 border border-sky-500/30 text-sky-400 text-xs font-code">
-						<span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span> SYSTEMS ONLINE // AVAILABLE
-					</span> <span class="text-xs font-code text-slate-500">v2.4.0</span> </div>
-				<div class="space-y-2">
-					<p class="text-xs font-code tracking-widest text-sky-400 uppercase">&gt; Backend Architecture & Data
-					</p>
-					<h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
-						Olá! Eu sou <br /> <span
-							class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-indigo-400">Josué
-							Barros</span> </h1>
-					<p class="text-sm sm:text-base text-slate-400 leading-relaxed max-w-xl pt-1"> Desenvolvedor Backend
-						focado na construção de APIs de alta performance, integrações distribuídas, modelagem relacional
-						sólida e código limpo orientado a resultados concretos. </p>
-				</div>
-				<div class="flex flex-col sm:flex-row gap-3 pt-2 max-w-md sm:max-w-none"> <a href="#contato"
-						class="flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition shadow-lg shadow-sky-500/20">
-						<span class="material-symbols-outlined text-[18px]">send</span> Iniciar Conexão </a> <a
-						href="#techs"
-						class="flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700/80 font-medium text-sm transition">
-						<span class="material-symbols-outlined text-[18px]">layers</span> Ver Stack Técnica </a> </div>
-				<!-- Metric badges -->
-				<div class="grid grid-cols-3 gap-3 pt-3 max-w-lg">
-					<div class="p-3 rounded-xl bg-brand-surface border border-brand-border text-center">
-						<div class="text-xs sm:text-sm font-bold text-sky-400 font-code">C# / .NET</div>
-						<div class="text-[10px] text-slate-400 mt-0.5">Core Architecture</div>
-					</div>
-					<div class="p-3 rounded-xl bg-brand-surface border border-brand-border text-center">
-						<div class="text-xs sm:text-sm font-bold text-indigo-400 font-code">GraphQL</div>
-						<div class="text-[10px] text-slate-400 mt-0.5">APIs & REST</div>
-					</div>
-					<div class="p-3 rounded-xl bg-brand-surface border border-brand-border text-center">
-						<div class="text-xs sm:text-sm font-bold text-slate-200 font-code">SQL RDBMS</div>
-						<div class="text-[10px] text-slate-400 mt-0.5">Data Integrity</div>
-					</div>
-				</div>
-			</div> <!-- Coluna Direita: Terminal Interativo de Código (Desktop & Tablet) -->
-			<div class="lg:col-span-5">
-				<div class="rounded-2xl bg-brand-surface border border-brand-border overflow-hidden shadow-2xl">
-					<!-- Terminal Header -->
-					<div
-						class="bg-slate-950/80 px-4 py-3 border-b border-brand-border flex items-center justify-between">
-						<div class="flex items-center gap-2"> <span
-								class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span> <span
-								class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span> <span
-								class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span> <span
-								class="text-[11px] font-code text-slate-400 ml-2">Program.cs — .NET 8 WebAPI</span>
-						</div> <span class="text-[10px] font-code text-sky-400 flex items-center gap-1"> <span
-								class="material-symbols-outlined text-[13px]">speed</span> 14ms Latency </span>
-					</div> <!-- Terminal Body -->
-					<pre
-						class="p-4 sm:p-5 text-[11px] sm:text-xs font-code leading-relaxed text-slate-300 overflow-x-auto bg-[#0a0e16]/60"><code><span class="text-slate-500">// Minimal API & Dependency Injection</span> <span class="text-sky-400">var</span> builder = <span class="text-indigo-300">WebApplication</span>.CreateBuilder(args); builder.Services.AddScoped&lt;<span class="text-emerald-300">IOrderRepository</span>, <span class="text-emerald-300">OrderRepository</span>&gt;(); builder.Services.AddDbContext&lt;<span class="text-emerald-300">AppDbContext</span>&gt;(opt =&gt; opt.UseNpgsql(connStr)); <span class="text-sky-400">var</span> app = builder.Build(); <span class="text-slate-500">// High-Throughput Endpoint</span> app.MapGet(<span class="text-amber-300">"/api/v2/metrics"</span>, <span class="text-sky-400">async</span> ( <span class="text-emerald-300">IOrderRepository</span> repo, <span class="text-emerald-300">CancellationToken</span> ct) =&gt; { <span class="text-sky-400">var</span> data = <span class="text-sky-400">await</span> repo.GetActivePipelineAsync(ct); <span class="text-sky-400">return</span> <span class="text-indigo-300">Results</span>.Ok(data); }); app.Run();</code></pre>
-					<!-- Terminal Footer -->
-					<div
-						class="px-4 py-2 bg-slate-950/70 border-t border-brand-border flex items-center justify-between text-[10px] font-code text-slate-500">
-						<span class="flex items-center gap-1.5 text-emerald-400"> <span
-								class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> HTTP 200 OK </span> <span>Pool:
-							32 conn | ACID Verified</span> </div>
-				</div>
-			</div>
-		</section> <!-- Tecnologias Section: Grid 1 col (mobile) -> 2 cols (tablet) -> 3 cols (desktop) -->
-		<section id="techs" class="space-y-6">
-			<div>
-				<div class="flex items-center gap-2 text-xs font-code text-sky-400 uppercase tracking-wider mb-1"> <span
-						class="material-symbols-outlined text-[16px]">terminal</span> Core Knowledge </div>
-				<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Conhecimento & Tecnologias</h2>
-				<p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl"> Tecnologias que venho dando enfoque em meus
-					estudos em busca de me tornar um profissional de desenvolvimento tecnológico de excelência. </p>
-			</div>
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"> <!-- C# Card -->
-				<div
-					class="p-5 rounded-2xl bg-brand-surface border border-brand-border hover:border-sky-500/50 hover:shadow-lg hover:shadow-sky-500/10 transition-all duration-300 space-y-3">
-					<div class="flex items-center justify-between">
-						<div class="flex items-center gap-3">
-							<div class="p-2.5 rounded-xl bg-sky-950/70 text-sky-400 border border-sky-500/20"> <span
-									class="material-symbols-outlined text-[22px]">code</span> </div>
-							<h3 class="font-bold text-sm text-slate-100">C# & .NET Platform</h3>
-						</div> <span
-							class="px-2 py-0.5 rounded text-[10px] font-code bg-slate-800 text-slate-300 border border-slate-700">LANG</span>
-					</div>
-					<p class="text-[11px] font-code text-sky-400/90">&gt; OOP // CLR // Typed</p>
-					<p class="text-xs text-slate-400 leading-relaxed"> Linguagem multiparadigma de tipagem forte criada
-						pela Microsoft. Código compilado para CIL, com CLR robusto para concorrência e microsserviços
-						escaláveis. </p>
-					<div
-						class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-code text-slate-500">
-						<span>Async / Await / Task</span> <span>.NET 8</span> </div>
-				</div> <!-- Unity Card -->
-				<div
-					class="p-5 rounded-2xl bg-brand-surface border border-brand-border hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 space-y-3">
-					<div class="flex items-center justify-between">
-						<div class="flex items-center gap-3">
-							<div class="p-2.5 rounded-xl bg-indigo-950/70 text-indigo-400 border border-indigo-500/20">
-								<span class="material-symbols-outlined text-[22px]">view_in_ar</span> </div>
-							<h3 class="font-bold text-sm text-slate-100">Unity Engine</h3>
-						</div> <span
-							class="px-2 py-0.5 rounded text-[10px] font-code bg-slate-800 text-slate-300 border border-slate-700">ENGINE</span>
-					</div>
-					<p class="text-[11px] font-code text-indigo-400/90">&gt; 2D/3D // Physics</p>
-					<p class="text-xs text-slate-400 leading-relaxed"> Motor multiplataforma para criação de
-						experiências 2D e 3D ricas. Arquitetura orientada a componentes, compatível com DirectX, OpenGL
-						e Vulkan. </p>
-					<div
-						class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-code text-slate-500">
-						<span>Component Architecture</span> <span>Multiplatform</span> </div>
-				</div> <!-- JavaScript Card -->
-				<div
-					class="p-5 rounded-2xl bg-brand-surface border border-brand-border hover:border-amber-500/50 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 space-y-3">
-					<div class="flex items-center justify-between">
-						<div class="flex items-center gap-3">
-							<div class="p-2.5 rounded-xl bg-amber-950/50 text-amber-400 border border-amber-500/20">
-								<span class="material-symbols-outlined text-[22px]">javascript</span> </div>
-							<h3 class="font-bold text-sm text-slate-100">JavaScript / Node</h3>
-						</div> <span
-							class="px-2 py-0.5 rounded text-[10px] font-code bg-slate-800 text-slate-300 border border-slate-700">RUNTIME</span>
-					</div>
-					<p class="text-[11px] font-code text-amber-400/90">&gt; Non-blocking I/O</p>
-					<p class="text-xs text-slate-400 leading-relaxed"> Linguagem interpretada de alto nível com
-						protótipos dinâmicos e event-loop assíncrono. Excelente flexibilidade em tooling moderno e
-						automações. </p>
-					<div
-						class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-code text-slate-500">
-						<span>Event-driven // NPM</span> <span>Node.js</span> </div>
-				</div> <!-- GraphQL Card -->
-				<div
-					class="p-5 rounded-2xl bg-brand-surface border border-brand-border hover:border-pink-500/50 hover:shadow-lg hover:shadow-pink-500/10 transition-all duration-300 space-y-3">
-					<div class="flex items-center justify-between">
-						<div class="flex items-center gap-3">
-							<div class="p-2.5 rounded-xl bg-pink-950/50 text-pink-400 border border-pink-500/20"> <span
-									class="material-symbols-outlined text-[22px]">hub</span> </div>
-							<h3 class="font-bold text-sm text-slate-100">GraphQL API</h3>
-						</div> <span
-							class="px-2 py-0.5 rounded text-[10px] font-code bg-slate-800 text-slate-300 border border-slate-700">API</span>
-					</div>
-					<p class="text-[11px] font-code text-pink-400/90">&gt; Schema-first Design</p>
-					<p class="text-xs text-slate-400 leading-relaxed"> Linguagem declarativa de consulta a APIs.
-						Substitui endpoints REST estáticos por schemas estritamente tipados, eliminando roundtrips
-						desnecessários. </p>
-					<div
-						class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-code text-slate-500">
-						<span>Resolvers // Typing</span> <span>GraphQL Spec</span> </div>
-				</div> <!-- SQL Card -->
-				<div
-					class="p-5 rounded-2xl bg-brand-surface border border-brand-border hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 transition-all duration-300 space-y-3">
-					<div class="flex items-center justify-between">
-						<div class="flex items-center gap-3">
-							<div
-								class="p-2.5 rounded-xl bg-emerald-950/50 text-emerald-400 border border-emerald-500/20">
-								<span class="material-symbols-outlined text-[22px]">database</span> </div>
-							<h3 class="font-bold text-sm text-slate-100">SQL & Relational</h3>
-						</div> <span
-							class="px-2 py-0.5 rounded text-[10px] font-code bg-slate-800 text-slate-300 border border-slate-700">DATA</span>
-					</div>
-					<p class="text-[11px] font-code text-emerald-400/90">&gt; ACID // Codd Model</p>
-					<p class="text-xs text-slate-400 leading-relaxed"> Base da álgebra relacional moderna. Foco em
-						integridade referencial rígida, queries otimizadas, indexação estratégica e consistência
-						transacional. </p>
-					<div
-						class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-code text-slate-500">
-						<span>PostgreSQL // MySQL</span> <span>ACID Compliant</span> </div>
-				</div> <!-- DBeaver Card -->
-				<div
-					class="p-5 rounded-2xl bg-brand-surface border border-brand-border hover:border-sky-500/50 hover:shadow-lg hover:shadow-sky-500/10 transition-all duration-300 space-y-3">
-					<div class="flex items-center justify-between">
-						<div class="flex items-center gap-3">
-							<div class="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20"> <span
-									class="material-symbols-outlined text-[22px]">tune</span> </div>
-							<h3 class="font-bold text-sm text-slate-100">DBeaver Ecosystem</h3>
-						</div> <span
-							class="px-2 py-0.5 rounded text-[10px] font-code bg-slate-800 text-slate-300 border border-slate-700">TOOLING</span>
-					</div>
-					<p class="text-[11px] font-code text-cyan-400/90">&gt; Multi-engine RDBMS</p>
-					<p class="text-xs text-slate-400 leading-relaxed"> Administração avançada multi-engine para
-						PostgreSQL, SQL Server, MySQL, SQLite e Oracle. Gestão eficiente de esquemas e análise de planos
-						de execução. </p>
-					<div
-						class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-code text-slate-500">
-						<span>Execution Plans // DDL</span> <span>Database Ops</span> </div>
-				</div>
-			</div>
-		</section> <!-- Perfil & Mentalidade Section -->
-		<section id="sobre" class="space-y-6">
-			<div>
-				<div class="flex items-center gap-2 text-xs font-code text-indigo-400 uppercase tracking-wider mb-1">
-					<span class="material-symbols-outlined text-[16px]">psychology</span> Behavioral Profile </div>
-				<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Perfil & Mentalidade</h2>
-			</div>
-			<div
-				class="p-6 sm:p-8 rounded-2xl bg-brand-surface border border-brand-border grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-				<!-- Left: Quote -->
-				<div class="lg:col-span-6 space-y-4">
-					<div class="flex items-center justify-between"> <span
-							class="px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-400 text-xs font-code">
-							ENFJ-A // PROTAGONISTA </span> <span class="text-[10px] font-code text-slate-500">SOFT
-							SKILLS MATRIX</span> </div>
-					<div class="relative bg-slate-950/60 p-5 rounded-xl border border-slate-800/80"> <span
-							class="text-3xl text-sky-400/30 font-serif leading-none select-none absolute top-2 left-3">“</span>
-						<blockquote class="italic text-xs sm:text-sm text-slate-300 leading-relaxed pl-4"> Tudo o que
-							você faz agora emana para fora e afeta todo mundo. Sua postura pode fazer seu coração
-							brilhar ou transmitir ansiedade. Palavras podem inspirar a liberdade. Cada ação pode abrir
-							os corações e as mentes. <footer
-								class="text-[11px] text-slate-500 not-italic font-code mt-3">— David Deida</footer>
-						</blockquote>
-					</div>
-				</div> <!-- Right: Mindset breakdown -->
-				<div class="lg:col-span-6 space-y-4">
-					<p class="text-xs sm:text-sm text-slate-400 leading-relaxed"> Protagonistas são movidos por
-						propósito, paixão e clareza de comunicação. Em tempos de tecnologia, isso se traduz em
-						facilidade para alinhar objetivos de negócio à arquitetura técnica, guiar colegas rumo à
-						melhoria contínua e manter uma atmosfera de confiança e colaboração aberta. </p>
-					<div class="space-y-2">
-						<p class="text-[11px] font-code text-slate-400 uppercase tracking-wider">Competências Centrais:
-						</p>
-						<div class="flex flex-wrap gap-2 font-code text-[11px]"> <span
-								class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-sky-500/40 transition">&gt;
-								Resolução de Problemas</span> <span
-								class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-sky-500/40 transition">&gt;
-								Liderança Colaborativa</span> <span
-								class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-sky-500/40 transition">&gt;
-								Clean Code & SOLID</span> <span
-								class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-sky-500/40 transition">&gt;
-								Aprendizado Contínuo</span> </div>
-					</div>
-					<div
-						class="p-3 rounded-xl bg-sky-950/20 border border-sky-500/20 text-xs text-sky-300/90 flex items-center gap-2">
-						<span class="material-symbols-outlined text-[18px] text-sky-400">verified</span> Foco constante
-						em código sustentável, escalabilidade horizontal e comunicação transparente. </div>
-				</div>
-			</div>
-		</section> <!-- Contato Section: 2 columns on desktop -->
-		<section id="contato" class="space-y-6">
-			<div>
-				<div class="flex items-center gap-2 text-xs font-code text-sky-400 uppercase tracking-wider mb-1"> <span
-						class="material-symbols-outlined text-[16px]">alternate_email</span> Direct Contact </div>
-				<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Vamos Conversar?</h2>
-				<p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl"> Espero ter conseguido mostrar um pouco da
-					minha experiência. Deixo à disposição minhas redes e o canal direto abaixo para batermos um papo
-					técnico! </p>
-			</div>
-			<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8"> <!-- Coluna Esquerda: Canais Rápidos -->
-				<div class="lg:col-span-5 space-y-4">
-					<div
-						class="p-6 rounded-2xl bg-brand-surface border border-brand-border space-y-4 h-full flex flex-col justify-between">
-						<div class="space-y-4">
-							<p class="text-xs font-code text-slate-400 uppercase tracking-wider">Canais Oficiais:</p> <a
-								href="https://github.com/JBProgrammer-8" target="_blank"
-								class="p-4 rounded-xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 flex items-center justify-between group transition">
-								<div class="flex items-center gap-3">
-									<div
-										class="p-2 rounded-lg bg-slate-800 text-slate-300 group-hover:text-sky-400 transition">
-										<span class="material-symbols-outlined text-[20px]">code</span> </div>
-									<div>
-										<div class="text-xs font-bold text-slate-200">GitHub</div>
-										<div class="text-[11px] text-slate-500">Repositórios & Código</div>
-									</div>
-								</div> <span
-									class="material-symbols-outlined text-slate-500 group-hover:text-sky-400 group-hover:translate-x-1 transition text-[18px]">arrow_forward</span>
-							</a> <a href="https://linkedin.com" target="_blank"
-								class="p-4 rounded-xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 flex items-center justify-between group transition">
-								<div class="flex items-center gap-3">
-									<div
-										class="p-2 rounded-lg bg-slate-800 text-slate-300 group-hover:text-sky-400 transition">
-										<span class="material-symbols-outlined text-[20px]">work</span> </div>
-									<div>
-										<div class="text-xs font-bold text-slate-200">LinkedIn</div>
-										<div class="text-[11px] text-slate-500">Trajetória Profissional</div>
-									</div>
-								</div> <span
-									class="material-symbols-outlined text-slate-500 group-hover:text-sky-400 group-hover:translate-x-1 transition text-[18px]">arrow_forward</span>
-							</a> <a href="https://wa.me/seunumero" target="_blank"
-								class="p-4 rounded-xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 flex items-center justify-between group transition">
-								<div class="flex items-center gap-3">
-									<div
-										class="p-2 rounded-lg bg-slate-800 text-slate-300 group-hover:text-emerald-400 transition">
-										<span class="material-symbols-outlined text-[20px]">chat</span> </div>
-									<div>
-										<div class="text-xs font-bold text-slate-200">WhatsApp</div>
-										<div class="text-[11px] text-slate-500">Conversa Direta / Mensagem</div>
-									</div>
-								</div> <span
-									class="material-symbols-outlined text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition text-[18px]">arrow_forward</span>
-							</a>
-						</div>
-						<div
-							class="pt-4 border-t border-slate-800/80 text-[11px] font-code text-slate-500 flex items-center gap-2">
-							<span class="material-symbols-outlined text-[16px] text-sky-400">bolt</span> Tempo médio de
-							resposta: <span class="text-slate-300">&lt; 24h</span> em dias úteis. </div>
-					</div>
-				</div> <!-- Coluna Direita: Formulário de Envio -->
-				<div class="lg:col-span-7">
-					<div class="p-6 sm:p-8 rounded-2xl bg-brand-surface border border-brand-border">
-						<form action="https://formspree.io/f/seu-id-aqui" method="POST" class="space-y-4">
-							<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-								<div class="space-y-1.5"> <label
-										class="text-xs font-semibold text-slate-300 font-code">NOME COMPLETO</label>
-									<div class="relative"> <span
-											class="material-symbols-outlined absolute left-3 top-2.5 text-slate-500 text-[18px]">person</span>
-										<input type="text" name="name" required placeholder="Ex: Carlos Silva"
-											class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs text-slate-200 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition" />
-									</div>
-								</div>
-								<div class="space-y-1.5"> <label
-										class="text-xs font-semibold text-slate-300 font-code">WHATSAPP /
-										TELEFONE</label>
-									<div class="relative"> <span
-											class="material-symbols-outlined absolute left-3 top-2.5 text-slate-500 text-[18px]">call</span>
-										<input type="tel" name="phone" placeholder="Ex: (11) 98765-4321"
-											class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs text-slate-200 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition" />
-									</div>
-								</div>
-							</div>
-							<div class="space-y-1.5"> <label
-									class="text-xs font-semibold text-slate-300 font-code">MENSAGEM DO PROJETO</label>
-								<textarea name="message" rows="4" required
-									placeholder="Conte brevemente sobre sua ideia, projeto ou oportunidade..."
-									class="w-full p-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs text-slate-200 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition resize-none"></textarea>
-							</div> <button type="submit"
-								class="w-full py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs uppercase tracking-wider font-code flex items-center justify-center gap-2 transition shadow-lg shadow-sky-500/20">
-								<span class="material-symbols-outlined text-[18px]">send</span> Enviar Mensagem
-							</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</section> <!-- Footer -->
-		<footer
-			class="pt-8 border-t border-brand-border flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-			<div class="space-y-1">
-				<p class="text-xs text-slate-400 font-code">© Josué Barros (JB Programmer). Todos os direitos
-					reservados.</p>
-				<p class="text-[10px] font-code text-slate-500">C# / .NET 8 • GRAPHQL • POSTGRESQL • SYSTEMS STABLE</p>
-			</div>
-			<div class="flex items-center gap-4 text-xs font-code text-slate-500"> <a href="#inicio"
-					class="hover:text-sky-400 transition">Voltar ao topo ↑</a> </div>
-		</footer>
-	</main> <!-- Bottom Navigation Bar (Apenas Mobile - oculta no desktop via md:hidden) -->
-	<nav
-		class="md:hidden fixed bottom-0 inset-x-0 bg-[#0a0e16]/95 backdrop-blur-lg border-t border-brand-border py-2 px-6 flex justify-around items-center z-50">
-		<a href="#inicio" class="flex flex-col items-center text-sky-400 group"> <span
-				class="material-symbols-outlined text-[20px]">home</span> <span
-				class="text-[10px] font-medium mt-0.5">Início</span> </a> <a href="#techs"
-			class="flex flex-col items-center text-slate-400 hover:text-slate-200 transition group"> <span
-				class="material-symbols-outlined text-[20px]">layers</span> <span
-				class="text-[10px] font-medium mt-0.5">Techs</span> </a> <a href="#sobre"
-			class="flex flex-col items-center text-slate-400 hover:text-slate-200 transition group"> <span
-				class="material-symbols-outlined text-[20px]">psychology</span> <span
-				class="text-[10px] font-medium mt-0.5">Sobre</span> </a> <a href="#contato"
-			class="flex flex-col items-center text-slate-400 hover:text-slate-200 transition group"> <span
-				class="material-symbols-outlined text-[20px]">mail</span> <span
-				class="text-[10px] font-medium mt-0.5">Contato</span> </a> </nav>
-</body>
+<span class="text-outline">// Core DI: Services &amp; Repositories</span>
+builder.Services.AddScoped&lt;<span class="text-primary-container">IOrderRepository</span>, <span class="text-primary">OrderRepository</span>&gt;();
+builder.Services.AddDbContext&lt;<span class="text-primary">AppDbContext</span>&gt;(opt =&gt; 
+    opt.UseNpgsql(connStr));
 
-</html>
+<span class="text-secondary">var</span> app = builder.Build();
+
+<span class="text-outline">// High-Throughput Minimal API</span>
+app.MapGet(<span class="text-tertiary">"/api/v2/orders"</span>, <span class="text-secondary">async</span> (
+    <span class="text-primary-container">IOrderRepository</span> repo, 
+    <span class="text-primary">CancellationToken</span> ct) =&gt; 
+{
+    <span class="text-secondary">var</span> metrics = <span class="text-secondary">await</span> repo.GetActivePipelineAsync(ct);
+    <span class="text-secondary">return</span> <span class="text-primary">Results</span>.Ok(metrics);
+});
+
+app.Run();<span class="inline-block w-2 h-4 ml-0.5 align-middle bg-primary-container cursor-blink"></span></code></pre>
+</div>
+<!-- Live Execution / Health Metrics Pill Bar with live pulsers -->
+<div class="px-4 py-3 bg-surface-container border-t border-outline-variant/30 flex items-center justify-between text-xs font-label-code">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+</span>
+<span class="text-on-surface text-[11px] font-semibold">HTTP 200 OK</span>
+</div>
+<div class="flex items-center gap-3 text-[11px] text-on-surface-variant">
+<span class="hover:text-primary transition-colors cursor-default">Pool: 32 conn</span>
+<span class="text-outline">|</span>
+<span class="text-primary font-medium hover:underline cursor-default">ACID Verified</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- TECH STACK & KNOWLEDGE SECTION: Responsive 3-col Grid with hover interactions -->
+<section class="w-full pt-6" id="techs-section">
+<div class="flex flex-col gap-2 max-w-2xl mb-8 animate-entrance">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">layers</span>
+<span class="font-label-code text-xs uppercase tracking-wider text-primary font-semibold">Core Knowledge</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold text-on-surface">Conhecimento &amp; Tecnologias</h2>
+<p class="text-sm sm:text-base text-on-surface-variant">
+            Tecnologias que venho dando enfoque em meus estudos em busca de me tornar um profissional de desenvolvimento tecnológico de excelência.
+          </p>
+</div>
+<!-- Responsive Grid for Desktop (1 col mobile, 2 col tablet, 3 col desktop) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+<!-- C# Card -->
+<div class="interactive-card p-5 rounded-xl bg-surface-container-low border border-outline-variant/40 shadow-sm flex flex-col justify-between gap-4 group">
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">code</span>
+</div>
+<div>
+<h3 class="text-base font-bold text-on-surface group-hover:text-primary transition-colors">C# &amp; .NET Platform</h3>
+<span class="font-label-code text-xs text-primary-container">&gt; OOP // CLR // Typed</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-code bg-surface-container-high text-on-surface-variant font-semibold group-hover:bg-primary-container/20 group-hover:text-primary transition-colors">LANG</span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                Linguagem multiparadigma de tipagem forte criada pela Microsoft. Código compilado para Common Intermediate Language (CIL), executado em Common Language Runtime (CLR), excelente para sistemas robustos, concorrência e microsserviços escaláveis.
+              </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-label-code text-outline">
+<span class="">Async / Await / Task</span>
+<span class="text-primary font-semibold group-hover:translate-x-0.5 transition-transform">.NET 8</span>
+</div>
+</div>
+<!-- Unity Card -->
+<div class="interactive-card p-5 rounded-xl bg-surface-container-low border border-outline-variant/40 shadow-sm flex flex-col justify-between gap-4 group hover:!border-secondary/60 hover:!shadow-[0_14px_30px_-10px_rgba(189,194,255,0.2)]">
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">view_in_ar</span>
+</div>
+<div>
+<h3 class="text-base font-bold text-on-surface group-hover:text-secondary transition-colors">Unity Engine</h3>
+<span class="font-label-code text-xs text-secondary">&gt; 2D/3D // Physics</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-code bg-surface-container-high text-on-surface-variant font-semibold group-hover:bg-secondary-container/30 group-hover:text-secondary transition-colors">ENGINE</span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                Motor multiplataforma da Unity Technologies para criação de experiências 2D e 3D ricas. Arquitetura orientada a componentes, compatível com DirectX, OpenGL ES e Vulkan no Windows, Android e iOS.
+              </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-label-code text-outline">
+<span class="">Component Architecture</span>
+<span class="text-secondary font-semibold group-hover:translate-x-0.5 transition-transform">Multiplatform</span>
+</div>
+</div>
+<!-- JavaScript / Node.js Card -->
+<div class="interactive-card p-5 rounded-xl bg-surface-container-low border border-outline-variant/40 shadow-sm flex flex-col justify-between gap-4 group">
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">javascript</span>
+</div>
+<div>
+<h3 class="text-base font-bold text-on-surface group-hover:text-primary transition-colors">JavaScript / Node</h3>
+<span class="font-label-code text-xs text-primary-container">&gt; Non-blocking I/O</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-code bg-surface-container-high text-on-surface-variant font-semibold group-hover:bg-primary-container/20 group-hover:text-primary transition-colors">RUNTIME</span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                Linguagem interpretada de alto nível com protótipos dinâmicos e event-loop assíncrono. Permite flexibilidade em scripts de automação, tooling moderno e construção de serviços server-side ágeis.
+              </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-label-code text-outline">
+<span class="">Event-driven // NPM</span>
+<span class="text-primary font-semibold group-hover:translate-x-0.5 transition-transform">Node.js</span>
+</div>
+</div>
+<!-- GraphQL Card -->
+<div class="interactive-card p-5 rounded-xl bg-surface-container-low border border-outline-variant/40 shadow-sm flex flex-col justify-between gap-4 group hover:!border-tertiary/60 hover:!shadow-[0_14px_30px_-10px_rgba(225,191,255,0.2)]">
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/20 flex items-center justify-center text-tertiary group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">hub</span>
+</div>
+<div>
+<h3 class="text-base font-bold text-on-surface group-hover:text-tertiary transition-colors">GraphQL API</h3>
+<span class="font-label-code text-xs text-tertiary">&gt; Schema-first Design</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-code bg-surface-container-high text-on-surface-variant font-semibold group-hover:bg-tertiary-container/30 group-hover:text-tertiary transition-colors">API</span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                Linguagem declarativa de consulta a APIs criada pelo Facebook. Substitui endpoints REST estáticos por schemas estritamente tipados, eliminando roundtrips desnecessários e otimizando transferência de dados.
+              </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-label-code text-outline">
+<span class="">Resolvers // Typing</span>
+<span class="text-tertiary font-semibold group-hover:translate-x-0.5 transition-transform">GraphQL Spec</span>
+</div>
+</div>
+<!-- SQL Card -->
+<div class="interactive-card p-5 rounded-xl bg-surface-container-low border border-outline-variant/40 shadow-sm flex flex-col justify-between gap-4 group">
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">database</span>
+</div>
+<div>
+<h3 class="text-base font-bold text-on-surface group-hover:text-primary transition-colors">SQL &amp; Relational</h3>
+<span class="font-label-code text-xs text-primary-container">&gt; ACID // Codd Model</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-code bg-surface-container-high text-on-surface-variant font-semibold group-hover:bg-primary-container/20 group-hover:text-primary transition-colors">DATA</span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                Base da álgebra relacional moderna inspirada no System R. Foco em integridade referencial rígida, queries otimizadas, indexação estratégica e consistência ACID para sistemas de missão crítica.
+              </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-label-code text-outline">
+<span class="">PostgreSQL // MySQL</span>
+<span class="text-primary font-semibold group-hover:translate-x-0.5 transition-transform">ACID Compliant</span>
+</div>
+</div>
+<!-- DBeaver Card -->
+<div class="interactive-card p-5 rounded-xl bg-surface-container-low border border-outline-variant/40 shadow-sm flex flex-col justify-between gap-4 group hover:!border-outline/80">
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">tune</span>
+</div>
+<div>
+<h3 class="text-base font-bold text-on-surface group-hover:text-primary transition-colors">DBeaver Ecosystem</h3>
+<span class="font-label-code text-xs text-on-surface-variant">&gt; Multi-engine RDBMS</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-code bg-surface-container-high text-on-surface-variant font-semibold">TOOLING</span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                Administração avançada multi-engine para PostgreSQL, SQL Server, MySQL, SQLite e Oracle. Gestão eficiente de esquemas, análise de planos de execução (EXPLAIN) e pipelines analíticos.
+              </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-label-code text-outline">
+<span class="">Execution Plans // DDL</span>
+<span class="text-on-surface font-semibold group-hover:translate-x-0.5 transition-transform">Database Ops</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SPONSORED MID-CONTENT AD WITH INTERACTIVE GLOW -->
+<div class="w-full py-4" id="mid-content-ad">
+<div class="interactive-card relative overflow-hidden rounded-2xl bg-surface-container-low border border-outline-variant/40 p-5 sm:p-6 shadow-lg backdrop-blur-sm group hover:border-primary/60">
+<div class="absolute -right-20 -top-16 w-80 h-80 bg-primary/15 rounded-full blur-3xl pointer-events-none animate-float-slow"></div>
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative z-10">
+<div class="flex items-start sm:items-center gap-4 min-w-0">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 border border-primary/20 flex items-center justify-center text-primary-container shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+<span class="material-symbols-outlined text-[26px]">cloud_done</span>
+</div>
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-label-code text-[10px] text-primary-container uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-primary/10 border border-primary/20">ADVERTISEMENT // HOSTING &amp; CLUSTER DEPLOY</span>
+<span class="font-label-code text-[11px] text-outline">PARCEIRO OFICIAL</span>
+</div>
+<h3 class="text-base sm:text-lg font-bold text-on-surface group-hover:text-primary transition-colors">Infraestrutura Kubernetes &amp; PostgreSQL com Baixa Latência</h3>
+<p class="text-xs sm:text-sm text-on-surface-variant max-w-2xl">Hospede microsserviços em nuvem com escalabilidade automatizada, monitoramento em tempo real e 99.99% de SLA para aplicações críticas.</p>
+</div>
+</div>
+<div class="flex items-center gap-3 shrink-0 w-full sm:w-auto">
+<a class="shimmer-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-surface-container-high border border-outline-variant/50 hover:border-primary/60 text-primary font-label-button text-xs font-bold hover:bg-surface-container-highest hover:shadow-[0_0_15px_rgba(56,189,248,0.2)] active:scale-95 transition-all" href="#contato-section">
+<span class="material-symbols-outlined text-[16px] animate-bounce">bolt</span>
+<span class="">Ativar $200 de Crédito</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- BEHAVIORAL PROFILE & MINDSET SECTION: 2-column Desktop Layout with interactive depth -->
+<section class="w-full pt-6" id="perfil-section">
+<div class="flex flex-col gap-2 max-w-2xl mb-8 animate-entrance">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">psychology</span>
+<span class="font-label-code text-xs uppercase tracking-wider text-secondary font-semibold">Behavioral Profile</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold text-on-surface">Perfil &amp; Mentalidade</h2>
+</div>
+<div class="interactive-card rounded-2xl bg-surface-container border border-outline-variant/40 p-6 sm:p-8 lg:p-10 shadow-lg hover:border-secondary/40">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<!-- Left Side: Quote Card with Visual Focus -->
+<div class="lg:col-span-6 flex flex-col gap-4">
+<div class="flex items-center justify-between flex-wrap gap-2">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/40 border border-secondary/30 hover:border-secondary/60 transition-colors">
+<span class="material-symbols-outlined text-secondary text-[16px] animate-spin" style="animation-duration: 10s;">stars</span>
+<span class="font-label-code text-xs text-secondary font-bold">ENFJ-A // PROTAGONISTA</span>
+</div>
+<span class="font-label-code text-[11px] text-on-surface-variant tracking-wider">SOFT SKILLS MATRIX</span>
+</div>
+<blockquote class="relative p-5 sm:p-6 rounded-xl bg-surface-container-high/70 border border-outline-variant/30 backdrop-blur-sm shadow-sm hover:border-primary/40 transition-colors group">
+<span class="material-symbols-outlined text-primary/40 text-[36px] absolute -top-4 -left-2 select-none group-hover:text-primary/70 transition-colors">format_quote</span>
+<p class="text-sm sm:text-base text-on-surface italic leading-relaxed pt-2">
+                  “Tudo o que você faz agora emana para fora e afeta todo mundo. Sua postura pode fazer seu coração brilhar ou transmitir ansiedade. Palavras podem inspirar a liberdade. Cada ação pode abrir os corações e as mentes.”
+                </p>
+<cite class="block mt-4 font-label-code text-xs text-primary not-italic font-bold tracking-wider">
+                  — DAVID DEIDA
+                </cite>
+</blockquote>
+</div>
+<!-- Right Side: Soft skills & Principles Breakdown -->
+<div class="lg:col-span-6 flex flex-col gap-5 lg:pl-4">
+<p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">
+                Protagonistas são movidos por propósito, paixão e clareza de comunicação. Em times de tecnologia, isso se traduz em facilidade para alinhar objetivos de negócio à arquitetura técnica, guiar colegas rumo à melhoria contínua e manter uma atmosfera de confiança e colaboração aberta.
+              </p>
+<!-- Competency Matrix Badges -->
+<div class="flex flex-col gap-2.5">
+<span class="font-label-code text-xs text-on-surface uppercase tracking-wider font-semibold">Competências Centrais:</span>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-primary font-label-code text-xs font-medium hover:border-primary/60 hover:scale-105 active:scale-95 transition-all cursor-default">
+                    &gt; Resolução de Problemas
+                  </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-secondary font-label-code text-xs font-medium hover:border-secondary/60 hover:scale-105 active:scale-95 transition-all cursor-default">
+                    &gt; Liderança Colaborativa
+                  </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-tertiary font-label-code text-xs font-medium hover:border-tertiary/60 hover:scale-105 active:scale-95 transition-all cursor-default">
+                    &gt; Clean Code &amp; SOLID
+                  </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-on-surface font-label-code text-xs font-medium hover:border-on-surface/60 hover:scale-105 active:scale-95 transition-all cursor-default">
+                    &gt; Aprendizado Contínuo
+                  </span>
+</div>
+</div>
+<!-- Quick Quote / Value Point -->
+<div class="p-3.5 rounded-lg bg-surface-container-low/70 border border-outline-variant/20 flex items-center gap-3 hover:border-primary/40 transition-colors">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span class="text-xs font-label-code text-on-surface-variant">Foco constante em código sustentável, escalabilidade horizontal e comunicação transparente.</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CONTACT & INQUIRY SECTION: 2-column Desktop Layout with interactive protocol switch and feedback -->
+<section class="w-full pt-6" id="contato-section">
+<div class="flex flex-col gap-2 max-w-2xl mb-8 animate-entrance">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">alternate_email</span>
+<span class="font-label-code text-xs uppercase tracking-wider text-primary font-semibold">Direct Contact</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold text-on-surface">Vamos Conversar?</h2>
+<p class="text-sm sm:text-base text-on-surface-variant">
+            Espero ter conseguido mostrar um pouco da minha experiência. Deixo à disposição minhas redes e o canal direto abaixo para batermos um papo técnico!
+          </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Column: Direct Links & Connectivity Info -->
+<div class="lg:col-span-5 flex flex-col gap-4">
+<div class="p-5 rounded-2xl bg-surface-container-low border border-outline-variant/40 flex flex-col gap-4">
+<span class="font-label-code text-xs text-on-surface-variant uppercase tracking-wider font-semibold">Canais Oficiais:</span>
+<!-- GitHub Card -->
+<a class="p-3.5 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 hover:border-primary/40 text-on-surface transition-all flex items-center justify-between group active:scale-98" href="https://github.com" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-6 transition-all">
+<span class="material-symbols-outlined text-[22px]">terminal</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">GitHub</span>
+<span class="font-label-code text-[11px] text-on-surface-variant">Repositórios &amp; Código</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary group-hover:translate-x-1 text-[18px] transition-all">arrow_forward</span>
+</a>
+<!-- LinkedIn Card -->
+<a class="p-3.5 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 hover:border-secondary/40 text-on-surface transition-all flex items-center justify-between group active:scale-98" href="https://linkedin.com" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary group-hover:scale-110 group-hover:rotate-6 transition-all">
+<span class="material-symbols-outlined text-[22px]">badge</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface group-hover:text-secondary transition-colors">LinkedIn</span>
+<span class="font-label-code text-[11px] text-on-surface-variant">Trajetória Profissional</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-secondary group-hover:translate-x-1 text-[18px] transition-all">arrow_forward</span>
+</a>
+<!-- WhatsApp Direct -->
+<a class="p-3.5 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 hover:border-primary-container/40 text-on-surface transition-all flex items-center justify-between group active:scale-98" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-container group-hover:scale-110 group-hover:rotate-6 transition-all">
+<span class="material-symbols-outlined text-[22px]">phone_iphone</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface group-hover:text-primary-container transition-colors">WhatsApp</span>
+<span class="font-label-code text-[11px] text-on-surface-variant">Conversa Direta / Mensagem</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container group-hover:translate-x-1 text-[18px] transition-all">arrow_forward</span>
+</a>
+</div>
+<!-- Fast Response Badge -->
+<div class="p-4 rounded-xl bg-surface-container-low/50 border border-outline-variant/30 flex items-center gap-3 hover:border-primary/40 transition-colors">
+<span class="material-symbols-outlined text-primary text-[20px] animate-pulse">bolt</span>
+<p class="font-label-code text-xs text-on-surface-variant leading-relaxed">
+                Tempo médio de resposta: <span class="text-primary font-bold">&lt; 24h</span> em dias úteis.
+              </p>
+</div>
+</div>
+<!-- Right Column: Interactive Form with Smooth Protocol Switch & Reactive Counter -->
+<div class="lg:col-span-7">
+<form class="interactive-card flex flex-col gap-4 p-6 sm:p-7 rounded-2xl bg-surface-container-low border border-outline-variant/40 shadow-sm" id="portfolio-contact-form" onsubmit="event.preventDefault(); handleSend();">
+<!-- Transmission Protocol Toggle with sliding active pill feedback -->
+<div class="flex flex-col gap-2 pb-2 border-b border-outline-variant/20">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-[11px] uppercase text-on-surface-variant tracking-wider font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[16px]">router</span>
+      MODO DE ENVIO // PROTOCOLO:
+    </span>
+<span class="font-label-code text-[10px] text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded font-semibold transition-all" id="protocol-status-badge">HTTP / FORMSPREE</span>
+</div>
+<div class="grid grid-cols-2 gap-2 bg-surface-container-highest p-1 rounded-lg border border-outline-variant/30 relative">
+<button class="flex items-center justify-center gap-2 py-2 px-3 rounded-md text-xs font-label-code font-bold transition-all bg-primary-container text-on-primary-container shadow-md active:scale-95" id="btn-mode-email" onclick="switchProtocol('email')" type="button">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+<span class="">API E-mail</span>
+</button>
+<button class="flex items-center justify-center gap-2 py-2 px-3 rounded-md text-xs font-label-code font-medium text-on-surface-variant hover:text-on-surface transition-all active:scale-95" id="btn-mode-whatsapp" onclick="switchProtocol('whatsapp')" type="button">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+<span class="">WhatsApp Direto</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Input Name -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-code text-xs uppercase text-on-surface-variant font-medium flex items-center justify-between" for="contact-name">
+<span class="">Nome Completo</span>
+<span class="text-[10px] text-outline">[Obrigatório]</span>
+</label>
+<div class="relative flex items-center group">
+<span class="material-symbols-outlined absolute left-3.5 text-outline text-[18px] group-focus-within:text-primary transition-colors">person</span>
+<input class="w-full pl-10 pr-3.5 py-3 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-on-surface placeholder:text-outline/60 text-sm focus:border-primary focus:bg-surface focus:outline-none focus:ring-1 focus:ring-primary/40 transition-all" id="contact-name" name="name" placeholder="Ex: Carlos Silva" required="" type="text"/>
+</div>
+</div>
+<!-- Input WhatsApp -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-code text-xs uppercase text-on-surface-variant font-medium flex items-center justify-between" for="contact-whatsapp">
+<span class="">WhatsApp / Telefone</span>
+<span class="text-[10px] text-outline">[Obrigatório]</span>
+</label>
+<div class="relative flex items-center group">
+<span class="material-symbols-outlined absolute left-3.5 text-outline text-[18px] group-focus-within:text-primary transition-colors">chat</span>
+<input class="w-full pl-10 pr-3.5 py-3 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-on-surface placeholder:text-outline/60 text-sm focus:border-primary focus:bg-surface focus:outline-none focus:ring-1 focus:ring-primary/40 transition-all" id="contact-whatsapp" name="whatsapp" placeholder="(11) 98765-4321" required="" type="tel"/>
+</div>
+</div>
+</div>
+<!-- Input Message with reactive counter -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-code text-xs uppercase text-on-surface-variant font-medium" for="contact-msg">
+      Mensagem do Projeto
+    </label>
+<span class="font-label-code text-[11px] text-outline transition-colors" id="char-counter">0 / 500 caracteres</span>
+</div>
+<div class="relative group">
+<textarea class="w-full p-3.5 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-on-surface placeholder:text-outline/60 text-sm focus:border-primary focus:bg-surface focus:outline-none focus:ring-1 focus:ring-primary/40 transition-all resize-none" id="contact-msg" maxlength="500" name="message" oninput="handleCharCount(this)" placeholder="Conte brevemente sobre sua ideia, projeto ou oportunidade..." required="" rows="4"></textarea>
+</div>
+</div>
+<!-- Terminal Telemetry / Live Status Strip with blinking indicator -->
+<div class="p-3 rounded-lg bg-surface-container border border-outline-variant/30 font-label-code text-xs flex items-center justify-between transition-colors" id="terminal-status-box">
+<div class="flex items-center gap-2">
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]" id="status-indicator-dot"></span>
+<span class="text-on-surface text-[11px] font-semibold" id="status-text">STANDBY // PRONTO PARA TRANSMISSÃO</span>
+</div>
+<span class="text-[10px] text-outline hidden sm:inline" id="status-subtext">PORT 443 / SSL ENCRYPTED</span>
+</div>
+<!-- Submit CTA Button with shimmer & active scale -->
+<button class="shimmer-btn mt-1 w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-primary-container text-on-primary-container font-label-button text-sm font-bold shadow-md shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all" id="submit-btn" type="submit">
+<span class="material-symbols-outlined text-[18px] transition-transform" id="submit-btn-icon">send</span>
+<span class="" id="submit-btn-label">Transmitir Mensagem via API</span>
+</button>
+<!-- Feedback / Result Area -->
+<div class="hidden text-left p-3.5 rounded-lg bg-primary/10 border border-primary/20 text-primary font-label-code text-xs leading-relaxed transition-all" id="form-feedback">
+<div class="flex items-center gap-2 font-bold mb-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="">MENSAGEM ENVIADA COM SUCESSO! HTTP 200 OK</span>
+</div>
+<p class="text-on-surface-variant text-[11px]" id="form-feedback-msg">Os dados foram despachados com sucesso. Entrarei em contato em breve!</p>
+</div>
+</form>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Responsive Footer -->
+<footer class="w-full border-t border-outline-variant/30 bg-surface-container-lowest py-8 px-4 sm:px-6 lg:px-8 relative z-20">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+<div class="flex items-center gap-2 group cursor-pointer">
+<img alt="JB Logo" class="h-6 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" src="https://lh3.googleusercontent.com/aida/AEtjO1V34JBHETiM7jjrU-hNzru3P5AcXIE4AxBlbftxBKGRUGhevfXuuexhi0TvEkArXNLGhiKgF3r1L1dlwd9_WQkzMVifOP1oI5x-CqXGVagHVXONL_twcPr7W4zCIkCZihiH2G8QFQ6qvdCwIILRJAHxR3fxZLKNifJDmHGp_Nm0QOdQ-ztije_HIk1aIYKG4bmu9RKJpWzFE6p1r3Rbvd2DfRg2iMPIty0HlJUK9U2GpizBU6VFtjMK02Y"/>
+<p class="font-label-code text-xs text-on-surface-variant group-hover:text-on-surface transition-colors">
+          © Josué Barros (JB Programmer). Todos os direitos reservados.
+        </p>
+</div>
+<div class="flex items-center gap-4 font-label-code text-[11px] text-outline">
+<span class="hover:text-primary transition-colors cursor-default">C# / .NET 8</span>
+<span class="">•</span>
+<span class="hover:text-secondary transition-colors cursor-default">GRAPHQL</span>
+<span class="">•</span>
+<span class="hover:text-tertiary transition-colors cursor-default">POSTGRESQL</span>
+<span class="">•</span>
+<span class="text-primary font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary inline-block animate-ping"></span>
+  SYSTEMS STABLE
+</span>
+</div>
+</div>
+</footer>
+<!-- Bottom Navigation Bar: Mobile only (md:hidden) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl border-t border-outline-variant/40">
+<div class="h-16 px-2 flex items-center justify-around">
+<a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] px-2 py-1 text-primary transition-all gap-0.5 active:scale-95" href="#hero-section">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+<span class="font-label-code text-[10px] tracking-tight">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-all gap-0.5 active:scale-95" href="#techs-section">
+<span class="material-symbols-outlined text-[20px]">dns</span>
+<span class="font-label-code text-[10px] tracking-tight">Techs</span>
+</a>
+<a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-all gap-0.5 active:scale-95" href="#perfil-section">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+<span class="font-label-code text-[10px] tracking-tight">Perfil</span>
+</a>
+<a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-all gap-0.5 active:scale-95" href="#contato-section">
+<span class="material-symbols-outlined text-[20px]">alternate_email</span>
+<span class="font-label-code text-[10px] tracking-tight">Contato</span>
+</a>
+</div>
+</nav>
+<!-- Interactive Scripts for Protocol Switching, Counter, and Form Handler -->
+<script>
+    let currentProtocol = 'email';
+
+    function switchProtocol(mode) {
+      currentProtocol = mode;
+      const btnEmail = document.getElementById('btn-mode-email');
+      const btnWa = document.getElementById('btn-mode-whatsapp');
+      const badge = document.getElementById('protocol-status-badge');
+      const submitLabel = document.getElementById('submit-btn-label');
+      const submitIcon = document.getElementById('submit-btn-icon');
+      const statusText = document.getElementById('status-text');
+
+      if (mode === 'email') {
+        btnEmail.className = 'flex items-center justify-center gap-2 py-2 px-3 rounded-md text-xs font-label-code font-bold transition-all bg-primary-container text-on-primary-container shadow-md active:scale-95';
+        btnWa.className = 'flex items-center justify-center gap-2 py-2 px-3 rounded-md text-xs font-label-code font-medium text-on-surface-variant hover:text-on-surface transition-all active:scale-95';
+        badge.innerText = 'HTTP / FORMSPREE';
+        badge.className = 'font-label-code text-[10px] text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded font-semibold transition-all';
+        submitLabel.innerText = 'Transmitir Mensagem via API';
+        submitIcon.innerText = 'send';
+        statusText.innerText = 'STANDBY // PRONTO PARA TRANSMISSÃO';
+      } else {
+        btnWa.className = 'flex items-center justify-center gap-2 py-2 px-3 rounded-md text-xs font-label-code font-bold transition-all bg-primary-container text-on-primary-container shadow-md active:scale-95';
+        btnEmail.className = 'flex items-center justify-center gap-2 py-2 px-3 rounded-md text-xs font-label-code font-medium text-on-surface-variant hover:text-on-surface transition-all active:scale-95';
+        badge.innerText = 'WA.ME / DIRECT PROTOCOL';
+        badge.className = 'font-label-code text-[10px] text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded font-semibold transition-all';
+        submitLabel.innerText = 'Iniciar Conversa no WhatsApp';
+        submitIcon.innerText = 'chat';
+        statusText.innerText = 'ROUTING // LINK DIRETO PRONTO';
+      }
+    }
+
+    function handleCharCount(textarea) {
+      const counter = document.getElementById('char-counter');
+      const length = textarea.value.length;
+      counter.innerText = `${length} / 500 caracteres`;
+      if (length > 400) {
+        counter.classList.add('text-primary');
+        counter.classList.remove('text-outline');
+      } else {
+        counter.classList.remove('text-primary');
+        counter.classList.add('text-outline');
+      }
+    }
+
+    function handleSend() {
+      const name = document.getElementById('contact-name').value;
+      const zap = document.getElementById('contact-whatsapp').value;
+      const msg = document.getElementById('contact-msg').value;
+      const feedback = document.getElementById('form-feedback');
+      const submitBtn = document.getElementById('submit-btn');
+      const dot = document.getElementById('status-indicator-dot');
+      const statusText = document.getElementById('status-text');
+
+      if (!name || !zap || !msg) return;
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-75', 'cursor-wait');
+      dot.className = 'inline-block w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping';
+      statusText.innerText = 'TRANSMITTING // DISPATCHING PACKETS...';
+      submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span><span>Transmitindo Pacote...</span>';
+
+      setTimeout(() => {
+        dot.className = 'inline-block w-2.5 h-2.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]';
+        statusText.innerText = 'SUCCESS // STATUS 200 OK';
+        submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span><span>Transmitido com Sucesso!</span>';
+        feedback.classList.remove('hidden');
+
+        const text = encodeURIComponent(`Olá Josué! Sou ${name}. ${msg} (Contato: ${zap})`);
+        window.open(`https://wa.me/?text=${text}`, '_blank');
+
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-75', 'cursor-wait');
+          if (currentProtocol === 'email') {
+            submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]" id="submit-btn-icon">send</span><span id="submit-btn-label">Transmitir Mensagem via API</span>';
+          } else {
+            submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]" id="submit-btn-icon">chat</span><span id="submit-btn-label">Iniciar Conversa no WhatsApp</span>';
+          }
+        }, 3000);
+      }, 750);
+    }
+  </script>
+</body></html>
