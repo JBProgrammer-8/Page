@@ -11,6 +11,8 @@ import {
   Clock,
   ArrowRight,
   ExternalLink,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
@@ -22,6 +24,7 @@ export default function ContactSection() {
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [submittedStatus, setSubmittedStatus] = useState<string | null>(null);
+  const [statusType, setStatusType] = useState<'success' | 'error' | null>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
@@ -44,9 +47,11 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !message) return;
+    if (!name.trim() || !message.trim()) return;
 
     setIsSending(true);
+    setSubmittedStatus(null);
+    setStatusType(null);
 
     const formattedMessage = `Olá Josué Barros!\n\nMeu nome é ${name} (${contactInfo || 'Sem contato adicional'}).\nInteresse: ${projectType}.\n\nMensagem:\n${message}`;
 
@@ -56,19 +61,55 @@ export default function ContactSection() {
 
       setTimeout(() => {
         setIsSending(false);
-        setSubmittedStatus(`Mensagem direcionada para o WhatsApp (+55 62 98505-4112)! Abrindo conversa...`);
+        setStatusType('success');
+        setSubmittedStatus(`Mensagem formatada com sucesso! Abrindo conversa no WhatsApp (+55 62 98505-4112)...`);
         window.open(waUrl, '_blank', 'noopener,noreferrer');
-      }, 500);
+      }, 400);
     } else {
-      const mailtoUrl = `mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
-        `Contato Portfólio: ${projectType} - ${name}`
-      )}&body=${encodeURIComponent(formattedMessage)}`;
+      // Envio de e-mail via FormData (sem await e sem bloqueio de CORS em localhost)
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', contactInfo);
+      formData.append('_replyto', contactInfo);
+      formData.append('subject', `[Contato Portfólio] ${projectType} - ${name}`);
+      formData.append('foco_projeto', projectType);
+      formData.append('message', message);
+      formData.append('_template', 'table');
+      formData.append('_captcha', 'false');
 
-      setTimeout(() => {
-        setIsSending(false);
-        setSubmittedStatus('Iniciando seu cliente de e-mail...');
-        window.open(mailtoUrl, '_self');
-      }, 500);
+      fetch(PERSONAL_INFO.emailEndpoint, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: formData,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Falha no envio HTTP: ${response.status}`);
+          }
+          return response.json().catch(() => ({}));
+        })
+        .then((data) => {
+          if (data && data.success === 'false') {
+            throw new Error('Retorno sem sucesso da API');
+          }
+          setIsSending(false);
+          setStatusType('success');
+          setSubmittedStatus(
+            'Mensagem enviada com sucesso! O e-mail foi entregue diretamente na caixa postal de Josué (jbprogrammer.8@gmail.com).'
+          );
+          setName('');
+          setContactInfo('');
+          setMessage('');
+        })
+        .catch(() => {
+          setIsSending(false);
+          setStatusType('error');
+          setSubmittedStatus(
+            'O provedor de envio direto encontrou uma instabilidade. Você pode enviar pelo Gmail Web ou abrir seu cliente de e-mail abaixo.'
+          );
+        });
     }
   };
 
@@ -233,7 +274,11 @@ export default function ContactSection() {
                 <div className="flex items-center gap-1 p-1 bg-slate-900 rounded-xl border border-slate-800">
                   <button
                     type="button"
-                    onClick={() => setProtocol('whatsapp')}
+                    onClick={() => {
+                      setProtocol('whatsapp');
+                      setSubmittedStatus(null);
+                      setStatusType(null);
+                    }}
                     className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 whitespace-nowrap ${
                       protocol === 'whatsapp'
                         ? 'bg-emerald-500/20 text-emerald-300 font-semibold'
@@ -246,7 +291,11 @@ export default function ContactSection() {
 
                   <button
                     type="button"
-                    onClick={() => setProtocol('email')}
+                    onClick={() => {
+                      setProtocol('email');
+                      setSubmittedStatus(null);
+                      setStatusType(null);
+                    }}
                     className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 whitespace-nowrap ${
                       protocol === 'email'
                         ? 'bg-sky-500/20 text-sky-300 font-semibold'
@@ -254,7 +303,7 @@ export default function ContactSection() {
                     }`}
                   >
                     <Mail className="w-3.5 h-3.5" />
-                    <span>E-mail / Mailto</span>
+                    <span>E-mail Direto (API)</span>
                   </button>
                 </div>
               </div>
@@ -280,14 +329,19 @@ export default function ContactSection() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor={contactInfoId} className="block text-xs font-mono text-slate-300 mb-1.5">
-                      Seu Contato (WhatsApp / E-mail)
+                      {protocol === 'email' ? 'Seu E-mail para Retorno *' : 'Seu WhatsApp ou Telefone'}
                     </label>
                     <input
                       id={contactInfoId}
-                      type="text"
+                      type={protocol === 'email' ? 'email' : 'text'}
+                      required={protocol === 'email'}
                       value={contactInfo}
                       onChange={(e) => setContactInfo(e.target.value)}
-                      placeholder="Ex: (11) 98765-4321 ou email@exemplo.com"
+                      placeholder={
+                        protocol === 'email'
+                          ? 'Ex: seu.nome@empresa.com'
+                          : 'Ex: (62) 98765-4321'
+                      }
                       className="w-full px-4 py-2.5 rounded-xl bg-[#080d16] border border-slate-800 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-sky-500/70 focus:ring-1 focus:ring-sky-500/70 transition-colors"
                     />
                   </div>
@@ -336,20 +390,67 @@ export default function ContactSection() {
 
                 {/* Feedback Toast */}
                 {submittedStatus && (
-                  <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-2 text-xs text-emerald-300 animate-in fade-in">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>{submittedStatus}</span>
+                  <div
+                    className={`p-4 rounded-xl border flex flex-col gap-2.5 text-xs animate-in fade-in ${
+                      statusType === 'success'
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                        : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                    }`}
+                  >
+                    <div className="flex items-start gap-2">
+                      {statusType === 'success' ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      ) : (
+                        <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                      )}
+                      <span className="leading-relaxed">{submittedStatus}</span>
+                    </div>
+
+                    {statusType === 'error' && (
+                      <div className="pt-2 border-t border-rose-500/20 flex flex-wrap items-center gap-2">
+                        <a
+                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${PERSONAL_INFO.email}&su=${encodeURIComponent(
+                            `[Portfólio] ${projectType} - ${name}`
+                          )}&body=${encodeURIComponent(
+                            `Olá Josué,\n\n${message}\n\nContato: ${contactInfo}`
+                          )}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-white font-medium transition-colors flex items-center gap-1.5"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          <span>Abrir no Gmail Web</span>
+                        </a>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              `Para: ${PERSONAL_INFO.email}\nAssunto: [Portfólio] ${projectType} - ${name}\n\n${message}\n\nContato: ${contactInfo}`
+                            );
+                            alert('Rascunho copiado para a área de transferência!');
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors flex items-center gap-1.5"
+                        >
+                          <Copy className="w-3.5 h-3.5" />
+                          <span>Copiar Rascunho</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
 
                 {/* Submit CTA */}
                 <button
                   type="submit"
-                  disabled={isSending || !name || !message}
+                  disabled={isSending || !name.trim() || !message.trim()}
                   className="w-full py-3.5 px-6 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 bg-sky-400 hover:bg-sky-300 text-slate-950 disabled:opacity-50 disabled:cursor-not-allowed active:scale-98 shadow-lg shadow-sky-500/15"
                 >
                   {isSending ? (
-                    <span>Preparando transmissão...</span>
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Despachando mensagem diretamente...</span>
+                    </>
                   ) : protocol === 'whatsapp' ? (
                     <>
                       <Send className="w-4 h-4" />
@@ -358,10 +459,15 @@ export default function ContactSection() {
                   ) : (
                     <>
                       <Mail className="w-4 h-4" />
-                      <span>Enviar Mensagem via E-mail</span>
+                      <span>Enviar E-mail Diretamente da Página</span>
                     </>
                   )}
                 </button>
+                {protocol === 'email' && (
+                  <p className="text-[11px] font-mono text-center text-slate-500">
+                    Envio seguro via API direta para jbprogrammer.8@gmail.com
+                  </p>
+                )}
               </form>
             </div>
           </div>

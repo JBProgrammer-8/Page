@@ -12,6 +12,7 @@ export const PERSONAL_INFO = {
   linkedin: 'https://www.linkedin.com/in/josue-b-b48862212/',
   whatsappNumber: '5562985054112',
   whatsappFormatted: '+55 (62) 98505-4112',
+  emailEndpoint: 'https://formsubmit.co/ajax/jbprogrammer.8@gmail.com',
   location: 'Brasil',
   status: 'Disponível para Projetos & Oportunidades',
 };
