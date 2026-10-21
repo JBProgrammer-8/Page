@@ -8,8 +8,8 @@ export const PERSONAL_INFO = {
   summary:
     'Desenvolvedor Backend focado na construção de APIs de alta performance, integrações distribuídas, modelagem relacional sólida e soluções de alta concorrência com o ecossistema .NET 8, C#, GraphQL e bancos de dados modernos.',
   email: 'jbprogrammer.8@gmail.com',
-  github: 'https://github.com/JBProgrammer-8',
-  linkedin: 'https://www.linkedin.com/in/josue-barros-jb/',
+  github: 'https://github.com/Josucka',
+  linkedin: 'https://www.linkedin.com/in/josue-b-b48862212/',
   whatsappNumber: '5562985054112',
   whatsappFormatted: '+55 (62) 98505-4112',
   location: 'Brasil',
