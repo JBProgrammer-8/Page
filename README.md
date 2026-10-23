@@ -1,4 +1,4 @@
-# 👋 Olá, eu sou [Seu Nome]
+# 👋 Olá, eu sou [Josué]
 
 🚀 Desenvolvedor de Software | Fundador em Construção | Entusiasta de Tecnologia e Inovação
 
@@ -28,8 +28,9 @@ Atualmente estou focado em:
 
 ### Backend
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+![C#](https://img.shields.io/badge/C%23-512BD4?style=for-the-badge&logo=csharp&logoColor=white)
+![.NET 8](https://img.shields.io/badge/.NET_8-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
 
 ### Frontend
 
@@ -80,21 +81,13 @@ Implementação de autenticação segura utilizando JWT e controle de acesso bas
 
 ## 🌎 Conecte-se Comigo
 
-📧 Email: seuemail@dominio.com
+📧 Email: jbprogrammer.8@gmail
 
-💼 LinkedIn: https://linkedin.com/in/seu-perfil
+💼 LinkedIn: www.linkedin.com/in/josue-b-b48862212
 
-🌐 Site: https://seusite.com
+🌐 Site: https://jbprogrammer-8.github.io/Page
 
-🐙 GitHub: https://github.com/seuusuario
-
----
-
-## 📊 Estatísticas GitHub
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=SEUUSUARIO&show_icons=true&theme=tokyonight)
-
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=SEUUSUARIO&layout=compact&theme=tokyonight)
+🐙 GitHub: https://github.com/josuck
 
 ---
 
